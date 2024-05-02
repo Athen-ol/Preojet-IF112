@@ -15,10 +15,10 @@ void save_pic(picture picture, const char* filename){
     image = fopen(filename, "w");
     fprintf(image, "P6\n%d %d\n255\n", picture.width, picture.height); // Écriture des en-têtes en une seule fois
     for(int i=0; i<picture.height*picture.width*3; i++){
-        fputc(picture.pixels[i], image);
+        fputc(picture.pixels_tab[i], image);
     }
     fclose(image);
-    free(picture.pixels);
+    free(picture.pixels_tab);
 }
 
 int max(int x, int y){
@@ -27,9 +27,9 @@ int max(int x, int y){
 }
 
 void set_pixel(int x, int y, color color, picture picture){
-    picture.pixels[3*(x + picture.width*y)] = color.red;
-    picture.pixels[3*(x + picture.width*y) + 1] = color.green;
-    picture.pixels[3*(x + picture.width*y) + 2] = color.blue;
+    picture.pixels_tab[3*(x + picture.width*y)] = color.red;
+    picture.pixels_tab[3*(x + picture.width*y) + 1] = color.green;
+    picture.pixels_tab[3*(x + picture.width*y) + 2] = color.blue;
 }
 
 void draw_line(picture picture, int x1, int y1, int x2, int y2, color color){
@@ -55,7 +55,7 @@ picture read_pic(const char* filename){
     // printf("%s\n", str);
     // printf("width : %u, height : %u\n", pic.width, pic.height);
     for(int i=0; i<(pic.height)*(pic.width)*3; i++){
-        pic.pixels[i] = (unsigned char) fgetc(image);
+        pic.pixels_tab[i] = (unsigned char) fgetc(image);
         // printf("%hhu %d\n", pic.pixels[i], i);
     }
     // printf("yo\n");
