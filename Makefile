@@ -3,6 +3,7 @@ objects = main.o bitmaplib.o filtres.o
 program : $(objects)
 	gcc -Wall -g -o projet $(objects)
 	./projet
+	rm $(objects)
 
 main.o : main.c bitmaplib.h filtres.h
 	gcc -Wall -g -c main.c
