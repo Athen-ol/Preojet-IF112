@@ -1,16 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "bitmaplib.h"
+#include "filtres.h"
 
 int main(int argc, char *argv[]){
     int opt;
-    char *type = NULL;
     char *nom_entree = NULL;
     char *nom_sortie = NULL;
+
+    char gray_active = 0;
+    char blur_active = 0;
+    char median_active = 0;
+
+    char taille_filtre = 0;
+    
     while ((opt = getopt(argc, argv, "t:i:o:s:")) != -1){
         switch (opt){
             case 't' : 
-                type = optarg;
+                char *type = optarg;
+                if(type = "gray") gray_active = 1;
+                else if(type = "blur") blur_active = 1;
+                else if(type = "median") median_active = 1;
+                else printf("argument de type inconnu\n");
+
                 printf("Le type de l'image est : '%s'\n", type);
                 break;
             case 'i' :
@@ -22,7 +35,8 @@ int main(int argc, char *argv[]){
                 printf("Le nom de l'image en sortie sera :  '%s'\n", nom_sortie);
                 break;
             case 's' : 
-                printf("La taille du filtre est :  '%s'\n", optarg);
+                taille_filtre = parseChar(optarg);
+                printf("La taille du filtre est :  '%hhi'\n", taille_filtre);
                 break;
             case '?':
                 printf("Option inconnue ou manquante\n");
