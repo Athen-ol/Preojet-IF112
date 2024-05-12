@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include "bitmaplib.h"
 #include "filtres.h"
+#include "filtres.c"
 
 int main(int argc, char *argv[]){
     int opt;
@@ -44,6 +45,15 @@ int main(int argc, char *argv[]){
 
         }
     }
+        picture pic = read_pic("input_image.ppm"); // lecture de l'im
+
+    // floutage :
+    int taille_filtre = 1; // pour filtre 3x3
+    picture blurred_pic = f(pic, taille_filtre);
+    
+    save_pic(blurred_pic, "blurred_image.ppm"); // sauvegarder l'image floutée
+    
+    free(blurred_pic.pixels_tab); // libérer mém allouée
     return 0;
 }
 
