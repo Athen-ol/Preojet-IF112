@@ -10,7 +10,7 @@ int main(int argc, char *argv[]){
     char *nom_entree = "image.ppm"; // par défaut on cherche une image nommée "image.ppm"
     char *nom_sortie = "image_transformee.ppm"; // par défault on exporte l'image de sortie "image_transformee.ppm"
 
-    char gray_active = 0;
+    char gray_active = 1;
     char blur_active = 0;
     char median_active = 0;
 
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]){
 
     picture pic = read_pic(nom_entree); // lecture de l'image
 
-    // if(gray_active) pic == g(pic); // conversion en niveaux de gris
+    if(gray_active) pic = niveau_de_gris(pic); // conversion en niveaux de gris
 
     if(blur_active) pic = f(pic, taille_filtre); // floutage de l'image
 
