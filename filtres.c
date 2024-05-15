@@ -39,8 +39,8 @@ picture f(picture pic, char taille_filtre){
                         int index = 3 * (k + l*pic.width); //calcul de l'indice du pixel ds tab de pixel
                         // somme des valeurs des composantes R B et G
                         somme_R += pic.pixels_tab[index];;
-                        somme_B += pic.pixels_tab[index + 1];
-                        somme_G += pic.pixels_tab[index + 2];
+                        somme_G += pic.pixels_tab[index + 1];
+                        somme_B += pic.pixels_tab[index + 2];
                         compteur ++; //incrementation du compteur
                     }
                 }
