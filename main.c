@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include "bitmaplib.h"
 #include "filtres.h"
-#include "filtres.c"
 
 int main(int argc, char *argv[]){
     int opt;

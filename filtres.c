@@ -1,12 +1,15 @@
 #include "filtres.h"
 #include "bitmaplib.h"
-#include "bitmaplib.c"
 #include <stdio.h>
 #include <stdlib.h>
 
 
 char niveaux_de_gris(pixel pixel){
     return pixel.R/3 + pixel.G/3 + pixel.B/3;
+}
+
+picture grayLevels(picture pic){
+    // TODO
 }
 
 
