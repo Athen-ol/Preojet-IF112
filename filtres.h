@@ -2,6 +2,7 @@
 #define __FILTRES_H__
 
 
+
 typedef struct{
     char R;
     char G;
@@ -9,6 +10,9 @@ typedef struct{
 } pixel;
 
 picture grayLevels(picture pic);
+picture f(picture pic, int taille_filtre);
+
+
 picture f(picture pic, int taille_filtre);
 
 #endif
