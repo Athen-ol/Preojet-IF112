@@ -1,7 +1,7 @@
 objects = main.o bitmaplib.o filtres.o jpg_io.o
 
 program : $(objects)
-	gcc -Wall -g -o projet $(objects)
+	gcc -Wall -g -o projet $(objects) -ljpeg
 	# ./projet
 	rm $(objects)
 
@@ -14,7 +14,7 @@ bitmaplib.o : bitmaplib.c bitmaplib.h
 filtres.o : filtres.c filtres.h bitmaplib.h
 	gcc -Wall -g -c filtres.c
 
-jpg_io.o : jpg_io.c jpg_io.h 
+jpg_io.o : jpg_io.c jpg_io.h bitmaplib.h
 	gcc -Wall -g -c jpg_io.c -ljpeg
 
 clean :

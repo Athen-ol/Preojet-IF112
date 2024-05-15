@@ -63,11 +63,7 @@ picture f(picture pic, char taille_filtre){
                         somme_R += pic.pixels_tab[index];;
                         somme_G += pic.pixels_tab[index + 1];
                         somme_B += pic.pixels_tab[index + 2];
-<<<<<<< HEAD
                         compteur ++; //incrementation du compteur pour savoir une moyenne sur combien de pixels on fait !
-=======
-                        compteur ++; //incrementation du compteur
->>>>>>> b7f4f005bdc95890a0dfe37519ac95f05c428734
                     }
                 }
             }

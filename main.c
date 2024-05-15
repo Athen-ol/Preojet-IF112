@@ -7,12 +7,14 @@
 
 int main(int argc, char *argv[]){
     int opt;
-    char *nom_entree = "image.ppm";
-    char *nom_sortie = "image_transformee.ppm";
+    char *nom_entree = "image.ppm"; // par défaut on cherche une image nommée "image.ppm"
+    char *nom_sortie = "image_transformee.ppm"; // par défault on exporte l'image de sortie "image_transformee.ppm"
 
     char gray_active = 0;
     char blur_active = 0;
     char median_active = 0;
+
+    char ppm_jpg = 0;
 
     char taille_filtre = 0;
     
@@ -20,12 +22,15 @@ int main(int argc, char *argv[]){
         switch (opt){
             case 't' : 
                 char *type = optarg;
-                if(type = "gray") gray_active = 1;
-                else if(type = "blur") blur_active = 1;
-                else if(type = "median") median_active = 1;
+                if(type == "gray") gray_active = 1;
+                else if(type == "blur"){
+                    blur_active = 1;
+                    printf("blur_active");
+                }
+                else if(type == "median") median_active = 1;
                 else printf("argument de type inconnu\n");
 
-                printf("Le type de l'image est : '%s'\n", type);
+                printf("Le type de filtre est : '%s'\n", type);
                 break;
             case 'i' :
                 nom_entree = optarg ;
@@ -45,17 +50,22 @@ int main(int argc, char *argv[]){
 
         }
     }
+
+    if(nom_entree == "image.ppm") printf("Attention vous avez laissé le nom d'image d'entrée par defaut\n");
+
+
+
     picture pic = read_pic(nom_entree); // lecture de l'image
 
-    // floutage :
-    // taille_filtre = 6; // pour filtre 3x3
-    picture blurred_pic = f(pic, taille_filtre);
+    // if(gray_active) pic == g(pic); // conversion en niveaux de gris
 
-    free(pic.pixels_tab); // libérer mém allouée
+    if(blur_active) pic = f(pic, taille_filtre); // floutage de l'image
+
+    // if(median_active) pic = m(pic, taille_filtre); // application du filtre moyenneur de l'image
     
-    save_pic(blurred_pic, nom_sortie); // sauvegarder l'image floutée
+    save_pic(pic, nom_sortie); // sauvegarder l'image floutée
     
-    // return 0;
+    return 0;
 }
 
 // Lancer le programme ainsi par exmple : ./a.out -i intput.ppm -t blur -s 3 -o output.ppm

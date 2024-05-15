@@ -1,7 +1,8 @@
-#ifndef JPEGIO_H
-#define JPEGIO_H
+#ifndef __JPEGIO_H__
+#define __JPEGIO_H__
 
-#include"img.h"
+
+#include "bitmaplib.h"
 
 picture read_jpeg(char *name);
 void    save_jpeg(char *name, picture img);

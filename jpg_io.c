@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "jpg_io.h"
-#include "img.h"
+#include "bitmaplib.h"
 
 
 picture read_jpeg(char *name) {
@@ -37,12 +37,12 @@ picture read_jpeg(char *name) {
     
   jpeg_start_decompress( &cinfo );
   row_pointer[0] = (unsigned char *)malloc( cinfo.output_width*3 );
-  img.pixels = malloc(img.height*img.width*3);
+  img.pixels_tab = malloc(img.height*img.width*3);
 
   while( cinfo.output_scanline < cinfo.image_height)  {
     jpeg_read_scanlines( &cinfo, row_pointer, 1 );
     for( i=0; i<cinfo.image_width*3;i++)
-      img.pixels[location++] = row_pointer[0][i];
+      img.pixels_tab[location++] = row_pointer[0][i];
   }
 
   jpeg_finish_decompress( &cinfo );
@@ -80,7 +80,7 @@ void save_jpeg(char *name, picture img) {
   jpeg_start_compress(&cinfo, TRUE);
 
   for (i = 0; i < img.height; i++) {
-    current_line = img.pixels + i * img.width * 3;
+    current_line = img.pixels_tab + i * img.width * 3;
     jpeg_write_scanlines(&cinfo, &current_line, 1);
   }
 
