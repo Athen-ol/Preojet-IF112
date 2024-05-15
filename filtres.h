@@ -9,7 +9,7 @@ typedef struct{
     char B;
 } pixel;
 
-picture grayLevels(picture pic);
-picture f(picture pic, int taille_filtre);
+// picture grayLevels(picture pic);
+picture f(picture pic, char taille_filtre);
 
 #endif

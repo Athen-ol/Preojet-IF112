@@ -1,16 +1,16 @@
-#include "filtres.h"
-#include "bitmaplib.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "bitmaplib.h"
+#include "filtres.h"
 
 
 char niveaux_de_gris(pixel pixel){
     return pixel.R/3 + pixel.G/3 + pixel.B/3;
 }
 
-picture grayLevels(picture pic){
-    // TODO
-}
+// picture grayLevels(picture pic){
+//     // TODO
+// }
 
 
 // struct picture{
@@ -18,7 +18,7 @@ picture grayLevels(picture pic){
 //     char* pixels;
 // };
 
-picture f(picture pic, int taille_filtre){
+picture f(picture pic, char taille_filtre){
 
     picture new_picture = new_pic(pic.width, pic.height); // nv im avec mm dimensions que im originale
     
