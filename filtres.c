@@ -4,8 +4,30 @@
 #include "filtres.h"
 
 
-char niveaux_de_gris(pixel pixel){
-    return pixel.R/3 + pixel.G/3 + pixel.B/3;
+// char niveaux_de_gris(pixel pix){
+//     char moyenne = pix.R/3 + pix.G/3 + pix.B/3;
+//     pixel pix_gris = {moyenne, moyenne, moyenne};
+//     return pix_gris;
+// }
+
+picture niveau_de_gris(picture pic){
+
+    picture new_picture = new_pic(pic.width, pic.height); // nv im avec mm dimensions que im originale
+    
+    
+
+    // parcours de chaque pixels de l'im originale
+    for(int i = 0; i < pic.width; i++){
+        for(int j = 0; j < pic.height; j++ ){ 
+            int index = 3 * (i + j*pic.width) ;
+            char moyenne = (pic.pixels_tab[index] + pic.pixels_tab[index + 1] + pic.pixels_tab[index + 2]) / 3 ; // on fait la moyenne des couleurs de chaque pixel
+            new_picture.pixels_tab[index] = moyenne; // on mets la moyenne de pic aux 3 pixels de new_picture
+            new_picture.pixels_tab[index + 1] = moyenne;
+            new_picture.pixels_tab[index + 2] = moyenne;
+        }
+    }
+    return new_picture;
+
 }
 
 // picture grayLevels(picture pic){
@@ -36,19 +58,19 @@ picture f(picture pic, char taille_filtre){
                 for (int l = j-taille_filtre ; l < j + taille_filtre ; l++){
                     
                     if (k >= 0 && k < pic.width && l >= 0 && l < pic.height) { // verif que les indices sont dans les limites de l'im
-                        int index = 3 * (k + l*pic.width); //calcul de l'indice du pixel ds tab de pixel
+                        int index = 3 * (k + l*pic.width); //calcul de l'indice du pixel ds tab de pixel RQ *3 car on a 3 'cases' par pixel
                         // somme des valeurs des composantes R B et G
                         somme_R += pic.pixels_tab[index];;
-                        somme_B += pic.pixels_tab[index + 1];
-                        somme_G += pic.pixels_tab[index + 2];
-                        compteur ++; //incrementation du compteur
+                        somme_G += pic.pixels_tab[index + 1];
+                        somme_B += pic.pixels_tab[index + 2];
+                        compteur ++; //incrementation du compteur pour savoir une moyenne sur combien de pixels on fait !
                     }
                 }
             }
 
             int index = 3 * (i + j * pic.width); //calcul de l'indice du pixel dans l'im floutée
             //affectation de nv valeurs moyennes des comp R G et V
-            new_picture.pixels_tab[index] = somme_R / compteur;
+            new_picture.pixels_tab[index] = somme_R / compteur; // on divise par compteur et pas par 9 car sur les côtés on somme moins de 9 pixels ! 
             new_picture.pixels_tab[index + 1] = somme_G / compteur;
             new_picture.pixels_tab[index + 2] = somme_B / compteur;
             }
