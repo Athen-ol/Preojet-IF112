@@ -3,7 +3,7 @@
 
 struct picture{
     int width, height;
-    char* pixels_tab;
+    unsigned char* pixels_tab;
 };
 
 typedef struct picture picture;
