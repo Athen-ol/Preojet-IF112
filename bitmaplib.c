@@ -70,7 +70,7 @@ void swap(int *a, int *b) {
     *b = temp;
 }
 
-void tri_tab(char* tab, int len){
+void tri_tab(int* tab, int len){
     char fonction_a_trier = 1;
 
     while(fonction_a_trier){

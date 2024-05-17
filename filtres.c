@@ -109,9 +109,9 @@ picture filtrage_median (picture pic, char taille_filtre){
     for(int i = 0; i < pic.width; i++){
         for(int j = 0; j < pic.height; j++ ){
             // initialisation des tab pr comp R B et G
-            int tab_rouge[(2*taille_filtre+1)*(2*taille_filtre+1)]; // on prend cette taille car taille max de notre tab souhaité
-            int tab_vert[(2*taille_filtre+1)*(2*taille_filtre+1)];
-            int tab_bleu[(2*taille_filtre+1)*(2*taille_filtre+1)];
+            int *tab_rouge = malloc((2*taille_filtre+1)*(2*taille_filtre+1)*sizeof(int)); // on prend cette taille car taille max de notre tab souhaité
+            int *tab_vert = malloc((2*taille_filtre+1)*(2*taille_filtre+1)*sizeof(int));
+            int *tab_bleu = malloc((2*taille_filtre+1)*(2*taille_filtre+1)*sizeof(int));
             int nb_de_voisins = 0; // compteur pour le nb de pixels dans le voisinage 
             
             // parcours des pixels dans le voisinage def par la taille du filtre 
@@ -130,23 +130,26 @@ picture filtrage_median (picture pic, char taille_filtre){
                     }
                 }
             }
-                tri_tab(tab_rouge, nb_de_voisins);
-                tri_tab(tab_vert, nb_de_voisins);
-                tri_tab(tab_bleu, nb_de_voisins);
+            // printf("%hhu ", tab_rouge[0]);
 
-                int indice_mediane = nb_de_voisins / 2 + 1;     // on calcule le milieu de la liste, si nb_de_voisins est pair on choisit la plus grande des valeurs medianes
-               
-                int mediane_rouge = tab_rouge[indice_mediane];
-                int mediane_vert = tab_vert[indice_mediane];
-                int mediane_bleu = tab_bleu[indice_mediane];
+            tri_tab(tab_rouge, nb_de_voisins);
+            tri_tab(tab_vert, nb_de_voisins);
+            tri_tab(tab_bleu, nb_de_voisins);
 
-                int index = 3 * (i + j * pic.width);
-                new_picture.pixels_tab[index] = mediane_rouge;
-                new_picture.pixels_tab[index + 1] = mediane_vert;
-                new_picture.pixels_tab[index + 2] = mediane_bleu;
+            // printf("%hhu\n", tab_rouge[0]);
 
-            }
+            int indice_mediane = nb_de_voisins / 2 + 1;     // on calcule le milieu de la liste, si nb_de_voisins est pair on choisit la plus grande des valeurs medianes
+
+            int index = 3 * (i + j * pic.width);
+            new_picture.pixels_tab[index] = tab_rouge[indice_mediane];
+            new_picture.pixels_tab[index + 1] = tab_vert[indice_mediane];
+            new_picture.pixels_tab[index + 2] = tab_bleu[indice_mediane];
+
+            free(tab_rouge);
+            free(tab_vert);
+            free(tab_bleu);
 
         }
+    }
     return new_picture;
 }  
