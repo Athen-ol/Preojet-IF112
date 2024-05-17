@@ -17,9 +17,9 @@ picture niveau_de_gris(picture pic){
     // parcours de chaque pixels de l'im originale
     for(int i = 0; i < pic.width; i++){
         for(int j = 0; j < pic.height; j++ ){ 
-            int index = 3 * (i + j*pic.width) ;
+            int index = 3 * (i + j*pic.width) ; // *3 car on a 3 cases par pixel
             unsigned char moyenne = (pic.pixels_tab[index] + pic.pixels_tab[index + 1] + pic.pixels_tab[index + 2]) / 3 ; // on fait la moyenne des couleurs de chaque pixel
-            new_picture.pixels_tab[index] = moyenne; // on mets la moyenne de pic aux 3 pixels de new_picture
+            new_picture.pixels_tab[index] = moyenne; // on met la moyenne de pic aux 3 pixels de new_picture
             new_picture.pixels_tab[index + 1] = moyenne;
             new_picture.pixels_tab[index + 2] = moyenne;
         }
