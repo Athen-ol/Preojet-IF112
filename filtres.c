@@ -10,7 +10,7 @@
 //     return pix_gris;
 // }
 
-picture niveau_de_gris(picture pic){
+picture niveau_de_gris(picture pic, picture masque){
 
     picture new_picture = new_pic(pic.width, pic.height); // nv im avec mm dimensions que im originale
 
@@ -18,10 +18,18 @@ picture niveau_de_gris(picture pic){
     for(int i = 0; i < pic.width; i++){
         for(int j = 0; j < pic.height; j++ ){ 
             int index = 3 * (i + j*pic.width) ; // *3 car on a 3 cases par pixel
-            int moyenne = (pic.pixels_tab[index] + pic.pixels_tab[index + 1] + pic.pixels_tab[index + 2])/3 ; // on fait la moyenne des couleurs de chaque pixel
-            new_picture.pixels_tab[index] = moyenne; // on met la moyenne de pic aux 3 pixels de new_picture
-            new_picture.pixels_tab[index + 1] = moyenne;
-            new_picture.pixels_tab[index + 2] = moyenne;
+
+            if(masque.pixels_tab[index] > 0 ){
+                int moyenne = (pic.pixels_tab[index] + pic.pixels_tab[index + 1] + pic.pixels_tab[index + 2])/3 ; // on fait la moyenne des couleurs de chaque pixel
+                new_picture.pixels_tab[index] = moyenne; // on met la moyenne de pic aux 3 pixels de new_picture
+                new_picture.pixels_tab[index + 1] = moyenne;
+                new_picture.pixels_tab[index + 2] = moyenne;
+            }
+            else {
+                new_picture.pixels_tab[index] = pic.pixels_tab[index]; // on recopie l'image originale
+                new_picture.pixels_tab[index + 1] = pic.pixels_tab[index + 1];
+                new_picture.pixels_tab[index + 2] = pic.pixels_tab[index + 2];
+            }
         }
     }
     return new_picture;
@@ -38,7 +46,7 @@ picture niveau_de_gris(picture pic){
 //     char* pixels;
 // };
 
-picture f(picture pic, char taille_filtre){
+picture f(picture pic, char taille_filtre, picture masque){
 
     picture new_picture = new_pic(pic.width, pic.height); // nv im avec mm dimensions que im originale
     
@@ -46,11 +54,11 @@ picture f(picture pic, char taille_filtre){
     for(int i = 0; i < pic.width; i++){
         for(int j = 0; j < pic.height; j++ ){
             // initialisation des sommes pr comp R B et G
-            int somme_R = 0;
-            int somme_B = 0;
-            int somme_G = 0;
-            int nb_de_voisins = 0; // compteur pour le nb de pixels dans le voisinage 
-            
+            unsigned int somme_R = 0;
+            unsigned int somme_B = 0;
+            unsigned int somme_G = 0;
+            unsigned int nb_de_voisins = 0; // compteur pour le nb de pixels dans le voisinage 
+
             // parcours des pixels dans le voisinage defpar la taille du filtre 
             for(int k = i-taille_filtre ; k < i + taille_filtre ; k++){
                 for (int l = j-taille_filtre ; l < j + taille_filtre ; l++){
@@ -58,7 +66,7 @@ picture f(picture pic, char taille_filtre){
                     if (k >= 0 && k < pic.width && l >= 0 && l < pic.height) { // verif que les indices sont dans les limites de l'im
                         int index = 3 * (k + l*pic.width); //calcul de l'indice du pixel ds tab de pixel RQ *3 car on a 3 'cases' par pixel
                         // somme des valeurs des composantes R B et G
-                        somme_R += pic.pixels_tab[index];;
+                        somme_R += pic.pixels_tab[index];
                         somme_G += pic.pixels_tab[index + 1];
                         somme_B += pic.pixels_tab[index + 2];
                         nb_de_voisins ++; //incrementation du compteur pour savoir une moyenne sur combien de pixels on fait !

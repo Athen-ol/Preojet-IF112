@@ -9,12 +9,14 @@ int main(int argc, char *argv[]){
     int opt;
     char *nom_entree = "image.ppm"; // par défaut on cherche une image nommée "image.ppm"
     char *nom_sortie = "image_transformee.ppm"; // par défault on exporte l'image de sortie "image_transformee.ppm"
+    char *nom_masque = NULL;
 
     char gray_active = 0;
     char blur_active = 0;
     char median_active = 0;
 
-    char taille_filtre = 0;
+
+    char taille_filtre = 10;
     
     while ((opt = getopt(argc, argv, "t:i:o:s:")) != -1){
         switch (opt){
@@ -34,7 +36,7 @@ int main(int argc, char *argv[]){
                 printf("Le type de filtre est : '%s'\n", type);
                 break;
             case 'i' :
-                nom_entree = optarg ;
+                nom_entree = optarg;
                 printf("Le nom de l'image en entrée est : '%s'\n", nom_entree);
                 break;
             case 'o' : 
@@ -44,6 +46,10 @@ int main(int argc, char *argv[]){
             case 's' : 
                 taille_filtre = atoi(optarg);
                 printf("La taille du filtre est :  '%hhi'\n", taille_filtre);
+                break;
+            case 'm' : 
+                nom_masque = optarg ;
+                printf("Le masque %s est utilisé\n", nom_masque);
                 break;
             case '?':
                 printf("Option inconnue ou manquante\n");
@@ -66,9 +72,26 @@ int main(int argc, char *argv[]){
     }
     else printf("Extension de fichier non reconnue\n");
 
-    if(gray_active) pic = niveau_de_gris(pic); // conversion en niveaux de gris
+    picture masque;
+    if(nom_masque != NULL){
+        if(nom_entree[k-1] == 'm'){
+            masque = read_pic(nom_masque); // lecture du masque ppm
+        }
+        else if(nom_entree[k-1] == 'g'){
+            masque = read_jpeg(nom_masque); // lecture du masque jpg
+        }
+        else printf("Extension de fichier non reconnue\n");
+    }
+    else {
+        masque = new_pic(pic.width, pic.height);
+        for(int i=0; i<masque.width*masque.height*3; i++){
+            masque.pixels_tab[i] = 255;
+        }
+    }
 
-    if(blur_active) pic = f(pic, taille_filtre); // floutage de l'image
+    if(gray_active) pic = niveau_de_gris(pic, masque); // conversion en niveaux de gris
+
+    if(blur_active) pic = f(pic, taille_filtre, masque); // floutage de l'image
 
     // if(median_active) pic = m(pic, taille_filtre); // application du filtre moyenneur de l'image
 
@@ -85,6 +108,6 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
-// Lancer le programme ainsi par exmple : ./a.out -i intput.ppm -t blur -s 3 -o output.ppm
+// Lancer le programme ainsi par exmple : ./projet -i intput.ppm -t blur -s 3 -o output.ppm
 
 
