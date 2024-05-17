@@ -47,7 +47,7 @@ picture niveau_de_gris(picture pic, picture masque){
 //     char* pixels;
 // };
 
-picture floutage(picture pic, char taille_filtre){
+picture floutage(picture pic, char taille_filtre, picture masque){
 
     picture new_picture = new_pic(pic.width, pic.height); // nv im avec mm dimensions que im originale
     

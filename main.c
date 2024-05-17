@@ -91,7 +91,7 @@ int main(int argc, char *argv[]){
 
     if(gray_active) pic = niveau_de_gris(pic, masque); // conversion en niveaux de gris
 
-    if(blur_active) pic = f(pic, taille_filtre, masque); // floutage de l'image
+    if(blur_active) pic = floutage(pic, taille_filtre, masque); // floutage de l'image
 
     if(median_active) pic = filtrage_median(pic, taille_filtre); // application du filtre moyenneur de l'image
 
