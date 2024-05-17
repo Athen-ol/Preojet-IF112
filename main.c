@@ -93,7 +93,7 @@ int main(int argc, char *argv[]){
 
     if(blur_active) pic = f(pic, taille_filtre, masque); // floutage de l'image
 
-    // if(median_active) pic = m(pic, taille_filtre); // application du filtre moyenneur de l'image
+    if(median_active) pic = filtrage_median(pic, taille_filtre); // application du filtre moyenneur de l'image
 
     k = 0;
     while (nom_sortie[k]) k++;
@@ -109,5 +109,4 @@ int main(int argc, char *argv[]){
 }
 
 // Lancer le programme ainsi par exmple : ./projet -i intput.ppm -t blur -s 3 -o output.ppm
-
 
