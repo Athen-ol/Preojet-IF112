@@ -13,8 +13,6 @@
 picture niveau_de_gris(picture pic){
 
     picture new_picture = new_pic(pic.width, pic.height); // nv im avec mm dimensions que im originale
-    
-    
 
     // parcours de chaque pixels de l'im originale
     for(int i = 0; i < pic.width; i++){
