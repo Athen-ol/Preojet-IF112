@@ -101,7 +101,7 @@ picture floutage(picture pic, char taille_filtre, picture masque){
 // }
 
 
-picture filtrage_median(picture pic, char taille_filtre){
+picture filtrage_median (picture pic, char taille_filtre){
     
     picture new_picture = new_pic(pic.width, pic.height); // nv im avec mm dimensions que im originale
     
@@ -109,9 +109,9 @@ picture filtrage_median(picture pic, char taille_filtre){
     for(int i = 0; i < pic.width; i++){
         for(int j = 0; j < pic.height; j++ ){
             // initialisation des tab pr comp R B et G
-            int tab_rouge[taille_filtre*taille_filtre]; // on prend cette taille car taille max de notre tab souhaité
-            int tab_vert[taille_filtre*taille_filtre];
-            int tab_bleu[taille_filtre*taille_filtre];
+            int tab_rouge[(2*taille_filtre+1)*(2*taille_filtre+1)]; // on prend cette taille car taille max de notre tab souhaité
+            int tab_vert[(2*taille_filtre+1)*(2*taille_filtre+1)];
+            int tab_bleu[(2*taille_filtre+1)*(2*taille_filtre+1)];
             int nb_de_voisins = 0; // compteur pour le nb de pixels dans le voisinage 
             
             // parcours des pixels dans le voisinage def par la taille du filtre 
@@ -120,11 +120,13 @@ picture filtrage_median(picture pic, char taille_filtre){
                     
                     if (k >= 0 && k < pic.width && l >= 0 && l < pic.height) { // verif que les indices sont dans les limites de l'im
                         int index = 3 * (k + l*pic.width);
-                        nb_de_voisins ++; //incrementation du compteur pour savoir une moyenne sur combien de pixels on fait !
+    
                         // ajout des comp R B et G dans 3 tab pour tous les voisins
                         tab_rouge[nb_de_voisins] = pic.pixels_tab[index];
                         tab_vert[nb_de_voisins] = pic.pixels_tab[index + 1];
                         tab_bleu[nb_de_voisins] = pic.pixels_tab[index + 2];  
+
+                        nb_de_voisins ++; //incrementation du compteur pour savoir une moyenne sur combien de pixels on fait !
                     }
                 }
             }
@@ -132,10 +134,8 @@ picture filtrage_median(picture pic, char taille_filtre){
                 tri_tab(tab_vert, nb_de_voisins);
                 tri_tab(tab_bleu, nb_de_voisins);
 
-                int indice_mediane = nb_de_voisins / 2;
-                if (est_impair(nb_de_voisins)) {
-                    indice_mediane = (nb_de_voisins - 1) / 2;
-                }
+                int indice_mediane = nb_de_voisins / 2 + 1;     // on calcule le milieu de la liste, si nb_de_voisins est pair on choisit la plus grande des valeurs medianes
+               
                 int mediane_rouge = tab_rouge[indice_mediane];
                 int mediane_vert = tab_vert[indice_mediane];
                 int mediane_bleu = tab_bleu[indice_mediane];

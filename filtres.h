@@ -11,6 +11,6 @@ typedef struct{
 
 picture niveau_de_gris(picture pic, picture masque);
 picture floutage(picture pic, char taille_filtre, picture masque);
-picture filtrage_median(picture pic, char taille_filtre)
+picture filtrage_median(picture pic, char taille_filtre);
 
 #endif

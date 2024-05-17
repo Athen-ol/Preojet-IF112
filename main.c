@@ -8,7 +8,7 @@
 int main(int argc, char *argv[]){
     int opt;
     char *nom_entree = "image.ppm"; // par défaut on cherche une image nommée "image.ppm"
-    char *nom_sortie = "image_transformee.ppm"; // par défault on exporte l'image de sortie "image_transformee.ppm"
+    char *nom_sortie = "output.jpg"; // par défault on exporte l'image de sortie "output.jpg"
     char *nom_masque = NULL;
 
     char gray_active = 0;
@@ -18,7 +18,7 @@ int main(int argc, char *argv[]){
 
     char taille_filtre = 10;
     
-    while ((opt = getopt(argc, argv, "t:i:o:s:")) != -1){
+    while ((opt = getopt(argc, argv, "t:i:o:s:m:")) != -1){
         switch (opt){
             case 't' : 
                 char *type = optarg;
@@ -74,10 +74,13 @@ int main(int argc, char *argv[]){
 
     picture masque;
     if(nom_masque != NULL){
-        if(nom_entree[k-1] == 'm'){
+        int k = 0;
+        while (nom_masque[k]) k++;
+
+        if(nom_masque[k-1] == 'm'){
             masque = read_pic(nom_masque); // lecture du masque ppm
         }
-        else if(nom_entree[k-1] == 'g'){
+        else if(nom_masque[k-1] == 'g'){
             masque = read_jpeg(nom_masque); // lecture du masque jpg
         }
         else printf("Extension de fichier non reconnue\n");

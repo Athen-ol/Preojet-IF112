@@ -71,9 +71,15 @@ void swap(int *a, int *b) {
 }
 
 void tri_tab(char* tab, int len){
-    for(int i = 0; i < len; i++){
-        if(tab[i] > tab[i+1]){
-            swap( &tab[i], &tab[i+1]);
+    char fonction_a_trier = 1;
+
+    while(fonction_a_trier){
+        fonction_a_trier = 0;
+        for(int i = 0; i < len; i++){
+            if(tab[i] > tab[i+1]){
+                swap( &tab[i], &tab[i+1]);
+                fonction_a_trier = 1;
+            }
         }
     }
 }
