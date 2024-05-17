@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "bitmaplib.h"
 
 
@@ -60,4 +61,23 @@ picture read_pic(const char* filename){
     }
     // printf("yo\n");
     return pic;
+}
+
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void tri_tab(char* tab, int len){
+    for(int i = 0; i < len; i++){
+        if(tab[i] > tab[i+1]){
+            swap( &tab[i], &tab[i+1]);
+        }
+    }
+}
+
+bool est_impair(int nombre) {
+    return (nombre % 2 != 0);
 }
