@@ -18,7 +18,7 @@ picture niveau_de_gris(picture pic){
     for(int i = 0; i < pic.width; i++){
         for(int j = 0; j < pic.height; j++ ){ 
             int index = 3 * (i + j*pic.width) ;
-            char moyenne = (pic.pixels_tab[index] + pic.pixels_tab[index + 1] + pic.pixels_tab[index + 2]) / 3 ; // on fait la moyenne des couleurs de chaque pixel
+            unsigned char moyenne = (pic.pixels_tab[index] + pic.pixels_tab[index + 1] + pic.pixels_tab[index + 2]) / 3 ; // on fait la moyenne des couleurs de chaque pixel
             new_picture.pixels_tab[index] = moyenne; // on mets la moyenne de pic aux 3 pixels de new_picture
             new_picture.pixels_tab[index + 1] = moyenne;
             new_picture.pixels_tab[index + 2] = moyenne;
@@ -49,7 +49,7 @@ picture f(picture pic, char taille_filtre){
             int somme_R = 0;
             int somme_B = 0;
             int somme_G = 0;
-            int compteur = 0; // compteur pour le nb de pixels dans le voisinage 
+            int nb_de_voisins = 0; // compteur pour le nb de pixels dans le voisinage 
             
             // parcours des pixels dans le voisinage defpar la taille du filtre 
             for(int k = i-taille_filtre ; k < i + taille_filtre ; k++){
@@ -61,16 +61,16 @@ picture f(picture pic, char taille_filtre){
                         somme_R += pic.pixels_tab[index];;
                         somme_G += pic.pixels_tab[index + 1];
                         somme_B += pic.pixels_tab[index + 2];
-                        compteur ++; //incrementation du compteur pour savoir une moyenne sur combien de pixels on fait !
+                        nb_de_voisins ++; //incrementation du compteur pour savoir une moyenne sur combien de pixels on fait !
                     }
                 }
             }
 
             int index = 3 * (i + j * pic.width); //calcul de l'indice du pixel dans l'im floutée
             //affectation de nv valeurs moyennes des comp R G et V
-            new_picture.pixels_tab[index] = somme_R / compteur; // on divise par compteur et pas par 9 car sur les côtés on somme moins de 9 pixels ! 
-            new_picture.pixels_tab[index + 1] = somme_G / compteur;
-            new_picture.pixels_tab[index + 2] = somme_B / compteur;
+            new_picture.pixels_tab[index] = somme_R / nb_de_voisins; // on divise par compteur et pas par 9 car sur les côtés on somme moins de 9 pixels ! 
+            new_picture.pixels_tab[index + 1] = somme_G / nb_de_voisins;
+            new_picture.pixels_tab[index + 2] = somme_B / nb_de_voisins;
             }
         }
 
