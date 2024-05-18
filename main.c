@@ -14,6 +14,7 @@ int main(int argc, char *argv[]){
     char gray_active = 0;
     char blur_active = 0;
     char median_active = 0;
+    char miroir_active = 0;
 
 
     char taille_filtre = 10;
@@ -28,8 +29,11 @@ int main(int argc, char *argv[]){
                 else if(type[0] == 'b'){
                     blur_active = 1;
                 }
-                else if(type[0] == 'm') {
+                else if(type[0] == 'me') {
                     median_active = 1;
+                }
+                else if(type[0] == 'mi') {
+                    miroir_active = 1;
                 }
                 else printf("argument de type inconnu\n");
 
@@ -91,12 +95,15 @@ int main(int argc, char *argv[]){
             masque.pixels_tab[i] = 255;
         }
     }
+    char mode = 'vertical'; // IL FAUT RAJOUTER UNE COMMANDE OU ON CHOISIT 'vertcial' OU 'horizontale'
 
     if(gray_active) pic = niveau_de_gris(pic, masque); // conversion en niveaux de gris
 
     if(blur_active) pic = floutage(pic, taille_filtre, masque); // floutage de l'image
 
     if(median_active) pic = filtrage_median(pic, taille_filtre); // application du filtre moyenneur de l'image
+
+    if(miroir_active) pic = miroir(pic, masque, mode); //application du miroir verticale ou horizontal
 
     k = 0;
     while (nom_sortie[k]) k++;

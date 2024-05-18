@@ -153,3 +153,48 @@ picture filtrage_median (picture pic, char taille_filtre){
     }
     return new_picture;
 }  
+
+
+picture miroir(picture pic, picture masque, char mode){
+
+    picture new_picture = new_pic(pic.width, pic.height); // nv im avec mm dimensions que im originale
+
+    // parcours de chaque pixels de l'im originale
+    for(int i = 0; i < pic.width; i++){
+        for(int j = 0; j < pic.height; j++ ){ 
+            int index = 3 * (i + j*pic.width) ; // *3 car on a 3 cases par pixel
+
+            if(masque.pixels_tab[index] > 0 ){
+                if (mode == 'vertical') { 
+                    for(int k = 0; k < pic.height; k++) {
+                        for(int l = 0; l < pic.width; l++) {
+                            int index_origine = 3 * (l + k * pic.width);
+                            int index_miroir = 3 * ((pic.width - 1 - l) + k * pic.width); // calcul de l'index après effet miroir
+                            new_picture.pixels_tab[index_miroir] = pic.pixels_tab[index_origine]; //on copie les valeurs de bases à leur pos après effet miroir
+                            new_picture.pixels_tab[index_miroir + 1] = pic.pixels_tab[index_origine + 1];
+                            new_picture.pixels_tab[index_miroir + 2] = pic.pixels_tab[index_origine + 2];
+                        }
+                    }
+                } 
+                if (mode == 'horizontale') { 
+                    for(int j = 0; j < pic.height; j++) {
+                        for(int i = 0; i < pic.width; i++) {
+                            int index_origine = 3 * (i + j * pic.width);
+                            int index_miroir = 3 * (i + (pic.height - 1 - j) * pic.width);
+                            new_picture.pixels_tab[index_miroir] = pic.pixels_tab[index_origine];
+                            new_picture.pixels_tab[index_miroir + 1] = pic.pixels_tab[index_origine + 1];
+                            new_picture.pixels_tab[index_miroir + 2] = pic.pixels_tab[index_origine + 2];
+            }
+        }
+    }
+            }
+            else {
+                new_picture.pixels_tab[index] = pic.pixels_tab[index]; // on recopie l'image originale
+                new_picture.pixels_tab[index + 1] = pic.pixels_tab[index + 1];
+                new_picture.pixels_tab[index + 2] = pic.pixels_tab[index + 2];
+            }
+        }
+    }
+    return new_picture;
+
+}  
