@@ -177,8 +177,8 @@ picture miroir(picture pic, picture masque, char mode){
                     // }
                 } 
                 if (mode == 'h') { 
-                    for(int j = 0; j < pic.height; j++) {
-                        for(int i = 0; i < pic.width; i++) {
+                    // for(int k = 0; k < pic.height; k++) {
+                    //     for(int l = 0; l < pic.width; l++) {
                             int index_origine = 3 * (i + j * pic.width);
                             int index_miroir = 3 * (i + (pic.height - 1 - j) * pic.width);
                             new_picture.pixels_tab[index_miroir] = pic.pixels_tab[index_origine];
@@ -186,15 +186,15 @@ picture miroir(picture pic, picture masque, char mode){
                             new_picture.pixels_tab[index_miroir + 2] = pic.pixels_tab[index_origine + 2];
             }
         }
-    }
-            }
+
             else {
                 new_picture.pixels_tab[index] = pic.pixels_tab[index]; // on recopie l'image originale
                 new_picture.pixels_tab[index + 1] = pic.pixels_tab[index + 1];
                 new_picture.pixels_tab[index + 2] = pic.pixels_tab[index + 2];
             }
-        }
     }
+    }
+        
     return new_picture;
 
-}  
+}

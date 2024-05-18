@@ -95,7 +95,9 @@ int main(int argc, char *argv[]){
             masque.pixels_tab[i] = 255;
         }
     }
-    char mode = 'v'; // IL FAUT RAJOUTER UNE COMMANDE OU ON CHOISIT 'vertcial' OU 'horizontale'
+    char mode;
+    printf("Entrez le mode de filtre miroir ('h' pour horizontal, 'v' pour vertical) : ");
+    scanf(" %c", &mode);
 
     if(gray_active) pic = niveau_de_gris(pic, masque); // conversion en niveaux de gris
 
