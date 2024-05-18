@@ -29,10 +29,10 @@ int main(int argc, char *argv[]){
                 else if(type[0] == 'b'){
                     blur_active = 1;
                 }
-                else if(type[0] == 'me') {
+                else if(type[0] == 'm' && type[1] == 'e') {
                     median_active = 1;
                 }
-                else if(type[0] == 'mi') {
+                else if(type[0] == 'm' && type[1] == 'i') {
                     miroir_active = 1;
                 }
                 else printf("argument de type inconnu\n");
@@ -95,7 +95,7 @@ int main(int argc, char *argv[]){
             masque.pixels_tab[i] = 255;
         }
     }
-    char mode = 'vertical'; // IL FAUT RAJOUTER UNE COMMANDE OU ON CHOISIT 'vertcial' OU 'horizontale'
+    char mode = 'v'; // IL FAUT RAJOUTER UNE COMMANDE OU ON CHOISIT 'vertcial' OU 'horizontale'
 
     if(gray_active) pic = niveau_de_gris(pic, masque); // conversion en niveaux de gris
 
@@ -118,5 +118,5 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
-// Lancer le programme ainsi par exmple : ./projet -i intput.ppm -t blur -s 3 -o output.ppm
+// Lancer le programme ainsi par exmple : ./projet -i person.jpg -t mi
 

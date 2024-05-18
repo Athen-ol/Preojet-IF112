@@ -165,18 +165,18 @@ picture miroir(picture pic, picture masque, char mode){
             int index = 3 * (i + j*pic.width) ; // *3 car on a 3 cases par pixel
 
             if(masque.pixels_tab[index] > 0 ){
-                if (mode == 'vertical') { 
-                    for(int k = 0; k < pic.height; k++) {
-                        for(int l = 0; l < pic.width; l++) {
-                            int index_origine = 3 * (l + k * pic.width);
-                            int index_miroir = 3 * ((pic.width - 1 - l) + k * pic.width); // calcul de l'index après effet miroir
+                if (mode == 'v') { 
+                    // for(int k = 0; k < pic.height; k++) {
+                        // for(int l = 0; l < pic.width; l++) {
+                            int index_origine = 3 * (i + j * pic.width);
+                            int index_miroir = 3 * ((pic.width - 1 - i) + j * pic.width); // calcul de l'index après effet miroir
                             new_picture.pixels_tab[index_miroir] = pic.pixels_tab[index_origine]; //on copie les valeurs de bases à leur pos après effet miroir
                             new_picture.pixels_tab[index_miroir + 1] = pic.pixels_tab[index_origine + 1];
                             new_picture.pixels_tab[index_miroir + 2] = pic.pixels_tab[index_origine + 2];
-                        }
-                    }
+                        // }
+                    // }
                 } 
-                if (mode == 'horizontale') { 
+                if (mode == 'h') { 
                     for(int j = 0; j < pic.height; j++) {
                         for(int i = 0; i < pic.width; i++) {
                             int index_origine = 3 * (i + j * pic.width);
