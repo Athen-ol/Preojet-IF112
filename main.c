@@ -17,9 +17,10 @@ int main(int argc, char *argv[]){
     char miroir_active = 0;
 
 
-    char taille_filtre = 10;
+    char taille_filtre = 5;
+    char mode = 'v'; // IL FAUT RAJOUTER UNE COMMANDE OU ON CHOISIT 'vertcial' OU 'horizontale'
     
-    while ((opt = getopt(argc, argv, "t:i:o:s:m:")) != -1){
+    while ((opt = getopt(argc, argv, "t:i:o:s:m:v:h:")) != -1){
         switch (opt){
             case 't' : 
                 char *type = optarg;
@@ -54,6 +55,14 @@ int main(int argc, char *argv[]){
             case 'm' : 
                 nom_masque = optarg ;
                 printf("Le masque %s est utilisé\n", nom_masque);
+                break;
+            case 'v' : 
+                mode = 'v';
+                printf("Le filtre miroir est en mode vertical\n");
+                break;
+            case 'h' : 
+                mode = 'h';
+                printf("Le filtre miroir est en mode horizontal\n");
                 break;
             case '?':
                 printf("Option inconnue ou manquante\n");
@@ -95,13 +104,12 @@ int main(int argc, char *argv[]){
             masque.pixels_tab[i] = 255;
         }
     }
-    char mode = 'v'; // IL FAUT RAJOUTER UNE COMMANDE OU ON CHOISIT 'vertcial' OU 'horizontale'
 
     if(gray_active) pic = niveau_de_gris(pic, masque); // conversion en niveaux de gris
 
     if(blur_active) pic = floutage(pic, taille_filtre, masque); // floutage de l'image
 
-    if(median_active) pic = filtrage_median(pic, taille_filtre); // application du filtre moyenneur de l'image
+    if(median_active) pic = filtrage_median(pic, taille_filtre, masque); // application du filtre moyenneur de l'image
 
     if(miroir_active) pic = miroir(pic, masque, mode); //application du miroir verticale ou horizontal
 
