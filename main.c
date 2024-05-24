@@ -20,33 +20,43 @@ int main(int argc, char *argv[]){
     char taille_filtre = 5;
     char mode = 'v'; 
     
-    while ((opt = getopt(argc, argv, "t:i:o:s:m:v:h:")) != -1){
+    while ((opt = getopt(argc, argv, "t:i:o:s:m:")) != -1){
         switch (opt){
             case 't' : 
                 char *type = optarg;
                 if(type[0] == 'g') {
                     gray_active = 1;
+                    printf("Le filtre niveau de gris est activé\n");
                 }
                 else if(type[0] == 'b'){
                     blur_active = 1;
+                    printf("Le filtre flou est activé\n");
                 }
                 else if(type[0] == 'm' && type[1] == 'e') {
                     median_active = 1;
+                    printf("Le filtre median est activé\n");
                 }
                 else if(type[0] == 'm' && type[1] == 'i') {
                     miroir_active = 1;
+                    printf("Le filtre miroir vertical est activé\n");
+                }
+                else if(type[0] == 'v' && type[1] == 'm') {
+                    miroir_active = 1;
+                    mode = 'v';
+                    printf("Le filtre miroir vertical est activé\n");
+                }
+                else if(type[0] == 'h' && type[1] == 'm') {
+                    miroir_active = 1;
+                    mode = 'h';
+                    printf("Le filtre miroir horizontal est activé\n");
                 }
                 else printf("argument de type inconnu\n");
-
-                printf("Le type de filtre est : '%s'\n", type);
                 break;
             case 'i' :
                 nom_entree = optarg;
-                printf("Le nom de l'image en entrée est : '%s'\n", nom_entree);
                 break;
             case 'o' : 
                 nom_sortie = optarg;
-                printf("Le nom de l'image en sortie sera :  '%s'\n", nom_sortie);
                 break;
             case 's' : 
                 taille_filtre = atoi(optarg);
@@ -56,22 +66,15 @@ int main(int argc, char *argv[]){
                 nom_masque = optarg ;
                 printf("Le masque %s est utilisé\n", nom_masque);
                 break;
-            case 'v' : 
-                mode = 'v';
-                printf("Le filtre miroir est en mode vertical\n");
-                break;
-            case 'h' : 
-                mode = 'h';
-                printf("Le filtre miroir est en mode horizontal\n");
-                break;
             case '?':
                 printf("Option inconnue ou manquante\n");
                 break;
 
         }
     }
-
+    printf("Le nom de l'image en entrée est : '%s'\n", nom_entree);
     if(nom_entree == "image.ppm") printf("Attention vous avez laissé le nom d'image d'entrée par defaut : image.ppm\n");
+    printf("Le nom de l'image en sortie sera :  '%s'\n", nom_sortie);
 
     int k = 0;
     while (nom_entree[k]) k++;
