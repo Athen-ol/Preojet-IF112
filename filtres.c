@@ -200,8 +200,9 @@ picture miroir(picture pic, picture masque, char mode){
                 new_picture.pixels_tab[index + 1] = pic.pixels_tab[index + 1];
                 new_picture.pixels_tab[index + 2] = pic.pixels_tab[index + 2];
             }
-        }
     }
+    }
+        
     return new_picture;
 
-}  
+}

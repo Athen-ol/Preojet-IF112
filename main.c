@@ -18,7 +18,7 @@ int main(int argc, char *argv[]){
 
 
     char taille_filtre = 5;
-    char mode = 'v'; // IL FAUT RAJOUTER UNE COMMANDE OU ON CHOISIT 'vertcial' OU 'horizontale'
+    char mode = 'v'; 
     
     while ((opt = getopt(argc, argv, "t:i:o:s:m:v:h:")) != -1){
         switch (opt){
